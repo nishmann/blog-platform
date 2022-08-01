@@ -1,0 +1,43 @@
+.card {
+  display: flex;
+  max-width: 938px;
+  height: 140px;
+  padding: 16px;
+  background-color: #fff;
+  filter: drop-shadow(0px 4px 12px rgba(0, 0, 0, 0.15));
+  border-radius: 5px;
+  margin-top: 26px;
+  &__head {
+    display: flex;
+  }
+  &__btn {
+    padding-left: 12px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+  }
+  &__content {
+    width: 70%;
+  }
+  &__title {
+    font-family: 'Inter', sans-serif;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 28px;
+    color: #1890FF;
+    padding: 0;
+    margin: 0;
+  }
+  &__avatar {
+    display: flex;
+    justify-content: flex-end;
+    width: 30%;
+    p {
+      margin: 0;
+    }
+  }
+  &__avatar_info {
+    padding-right: 12px;
+  }
+}
