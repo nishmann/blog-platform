@@ -1,6 +1,7 @@
 import React from 'react';
 import { Avatar, Tag, Typography } from 'antd';
 import { HeartOutlined, UserOutlined } from '@ant-design/icons';
+import { Link } from 'react-router-dom';
 
 import style from './Article.module.scss';
 
@@ -11,7 +12,9 @@ const Article: React.FC = () => {
     <div className={style.card}>
       <div className={style.card__content}>
         <div className={style.card__head}>
-          <h1 className={style.card__title}>Some article title</h1>
+          <Link to="/articles/1">
+            <h1 className={style.card__title}>Some article title</h1>
+          </Link>
           <button className={style.card__btn}>
             <HeartOutlined /> 12
           </button>
