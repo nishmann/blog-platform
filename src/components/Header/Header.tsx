@@ -12,8 +12,12 @@ const Header: React.FC = () => {
           <h3>Blog Platform</h3>
         </Link>
         <div>
-          <Button type="link">Sign In</Button>
-          <Button type="primary">Sign Up</Button>
+          <Link to="sign-in">
+            <Button type="link">Sign In</Button>
+          </Link>
+          <Link to="/sign-up">
+            <Button type="primary">Sign Up</Button>
+          </Link>
         </div>
       </div>
     </div>
