@@ -1,26 +1,60 @@
-import React from 'react';
-import { Typography } from 'antd';
+import React, { useEffect, useState } from 'react';
+import { Avatar, Tag, Typography } from 'antd';
+import ReactMarkdown from 'react-markdown';
 
+import { Link, useParams } from 'react-router-dom';
+import { format } from 'date-fns';
+import { HeartOutlined, UserOutlined } from '@ant-design/icons';
+import styleAvatar from '../Article/Article.module.scss';
 import style from './ArticleDetailPage.module.scss';
+import { getArticle } from '../../store/slices/articlesSlice';
+import { useAppDispatch } from '../../hooks';
+import { ArticleType } from '../../store/types';
+import { shortText } from '../../utils/shortText';
 
 const { Title, Text } = Typography;
 
 const ArticleDetailPage: React.FC = () => {
-  return (
-    <div className={style.article__page}>
-      <Title>Article Detail Page</Title>
-      <Text>
-        Est Ampyciden pater patent Amor saxa inpiger Lorem markdownum Stygias neque is referam fudi, breve per. Et
-        Achaica tamen: nescia ista occupat, illum se ad potest humum et. Qua deos has fontibus Recens nec ferro
-        responsaque dedere armenti opes momorderat pisce, vitataque et fugisse. Et iamque incipiens, qua huius suo omnes
-        ne pendentia citus pedum. Quamvis pronuba Ulli labore facta. Io cervis non nosterque nullae, vides: aethere
-        Delphice subit, tamen Romane ob cubilia Rhodopen calentes librata! Nihil populorum flava, inrita? Sit hic nunc,
-        hoc formae Esse illo? Umeris eram similis, crudelem de est relicto ingemuit finiat Pelia uno cernunt Venus
-        draconem, hic, Methymnaeae. 1. Clamoribus haesit tenentem iube Haec munera 2. Vincla venae 3. Paris includere
-        etiam tamen 4. Superi te putria imagine Deianira 5. Tremore hoste Esse sed perstat capillis siqua
-      </Text>
-    </div>
-  );
+  const dispatch = useAppDispatch();
+  const [article, setArticle] = useState();
+  const { id } = useParams();
+  useEffect(() => {
+    if (id != null) {
+      dispatch(getArticle(id)).then((el) => setArticle(el.payload));
+    }
+  }, []);
+  const renderElement = (element: ArticleType) => {
+    const { title, body, slug, description, favoritesCount, favorited, tagList, updatedAt, createdAt, author } =
+      element;
+    return (
+      <div className={style.article__page}>
+        <div className={`${styleAvatar.card} ${style.card__not_filter}`}>
+          <div className={styleAvatar.card__content}>
+            <div className={styleAvatar.card__head}>
+              <Link to={`/articles/${slug}`}>
+                <h1 className={styleAvatar.card__title}>{title}</h1>
+              </Link>
+              <button className={styleAvatar.card__btn}>
+                <HeartOutlined /> {favoritesCount}
+              </button>
+            </div>
+            <Tag>{tagList}</Tag>
+            <p>{shortText(description, 150)}</p>
+          </div>
+          <div className={styleAvatar.card__avatar}>
+            <div className={styleAvatar.card__avatar_info}>
+              <p>{author.username}</p>
+              <Text type="secondary">{format(new Date(updatedAt), 'MMMM d, u')}</Text>
+            </div>
+            <Avatar icon={<UserOutlined />} />
+          </div>
+        </div>
+        <Title level={3}>{title}</Title>
+        <ReactMarkdown children={body} />
+      </div>
+    );
+  };
+  return <div>{article && renderElement(article)}</div>;
 };
 
 export default ArticleDetailPage;

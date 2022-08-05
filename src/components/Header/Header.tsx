@@ -1,8 +1,8 @@
 import React from 'react';
 
-import style from './Header.module.scss';
 import { Button } from 'antd';
 import { Link } from 'react-router-dom';
+import style from './Header.module.scss';
 
 const Header: React.FC = () => {
   return (
