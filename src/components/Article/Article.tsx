@@ -10,18 +10,7 @@ import { shortText } from '../../utils/shortText';
 
 const { Text } = Typography;
 
-const Article: React.FC<ArticleType> = ({
-  title,
-  favoritesCount,
-  favorited,
-  slug,
-  tagList,
-  author,
-  createdAt,
-  description,
-  updatedAt,
-  body,
-}) => {
+const Article: React.FC<ArticleType> = ({ title, favoritesCount, slug, tagList, author, description, updatedAt }) => {
   return (
     <div className={style.card}>
       <div className={style.card__content}>
@@ -29,7 +18,7 @@ const Article: React.FC<ArticleType> = ({
           <Link to={`/articles/${slug}`}>
             <h1 className={style.card__title}>{title}</h1>
           </Link>
-          <button className={style.card__btn}>
+          <button className={style.card__btn} type="button">
             <HeartOutlined /> {favoritesCount}
           </button>
         </div>

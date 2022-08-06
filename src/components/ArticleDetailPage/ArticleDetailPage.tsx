@@ -23,9 +23,8 @@ const ArticleDetailPage: React.FC = () => {
       dispatch(getArticle(id)).then((el) => setArticle(el.payload));
     }
   }, []);
-  const renderElement = (element: ArticleType) => {
-    const { title, body, slug, description, favoritesCount, favorited, tagList, updatedAt, createdAt, author } =
-      element;
+  const renderElement = (element: ArticleType): any => {
+    const { title, body, slug, description, favoritesCount, tagList, updatedAt, author } = element;
     return (
       <div className={style.article__page}>
         <div className={`${styleAvatar.card} ${style.card__not_filter}`}>
@@ -34,7 +33,7 @@ const ArticleDetailPage: React.FC = () => {
               <Link to={`/articles/${slug}`}>
                 <h1 className={styleAvatar.card__title}>{title}</h1>
               </Link>
-              <button className={styleAvatar.card__btn}>
+              <button className={styleAvatar.card__btn} type="button">
                 <HeartOutlined /> {favoritesCount}
               </button>
             </div>
@@ -50,7 +49,7 @@ const ArticleDetailPage: React.FC = () => {
           </div>
         </div>
         <Title level={3}>{title}</Title>
-        <ReactMarkdown children={body} />
+        <ReactMarkdown>{body}</ReactMarkdown>
       </div>
     );
   };

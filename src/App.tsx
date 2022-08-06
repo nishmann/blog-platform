@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter, Routes, Route, useParams } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 
 import style from './App.module.scss';
 import 'antd/dist/antd.css';
@@ -7,8 +7,10 @@ import ArticleList from './components/ArticleList';
 import ArticleDetailPage from './components/ArticleDetailPage';
 import Header from './components/Header';
 import SignUp from './components/SignUp';
+import SignIn from './components/SignIn';
+import Profile from './components/Profile';
 
-function App() {
+const App: React.FC = () => {
   return (
     <BrowserRouter>
       <div className={style.app}>
@@ -16,6 +18,8 @@ function App() {
         <div className={style.app__content}>
           <Routes>
             <Route path="/sign-up" element={<SignUp />} />
+            <Route path="/sign-in" element={<SignIn />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/articles" element={<ArticleList />} />
             <Route path="/articles/:id" element={<ArticleDetailPage />} />
           </Routes>
@@ -23,6 +27,6 @@ function App() {
       </div>
     </BrowserRouter>
   );
-}
+};
 
 export default App;
