@@ -10,9 +10,11 @@ const ArticleList: React.FC = () => {
   const { articles } = useAppSelector((state) => state.articlesSlice);
   const dispatch = useAppDispatch();
   const [page, setPage] = useState(1);
+
   useEffect(() => {
     dispatch(fetchArticles(page));
   }, [page]);
+
   return (
     <div className={style.article__list}>
       {articles.map((article) => {

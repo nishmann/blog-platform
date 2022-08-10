@@ -1,9 +1,12 @@
 import React from 'react';
 import { Typography } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import style from '../SignUp/SignUp.module.scss';
+import { login } from '../../store/slices/authenticationSlice';
+import { setToken } from '../../utils/localStorage';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 
 const { Title } = Typography;
 
@@ -13,6 +16,9 @@ type FormInputs = {
 };
 
 const SignIn: React.FC = () => {
+  const { user } = useAppSelector((state) => state.authSlice);
+  const dispatch = useAppDispatch();
+  const navigate: any = useNavigate();
   const {
     register,
     reset,
@@ -20,10 +26,12 @@ const SignIn: React.FC = () => {
     formState: { errors },
   } = useForm<FormInputs>({ mode: 'onBlur' });
 
-  const onSubmit = (data: object): any => {
-    alert(JSON.stringify(data));
+  const onSubmit = (data: FormInputs) => {
+    dispatch(login(data)).then((res: any) => setToken(res.payload.token));
     reset();
   };
+
+  if (user !== null) return navigate('/articles');
 
   return (
     <div className={style.register}>

@@ -7,4 +7,30 @@
     max-width: 1440px;
     margin: 0 auto;
   }
+  a {
+    color: black;
+  }
+  &__auth {
+    display: flex;
+    align-items: center;
+    gap: 26px;
+  }
+  .avatar {
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    &__name {
+      margin: 0;
+      font-family: 'Inter', sans-serif;
+      font-style: normal;
+      font-weight: 400;
+      font-size: 18px;
+      line-height: 28px;
+    }
+    &__img {
+      width: 46px;
+      height: 46px;
+      border-radius: 50%;
+    }
+  }
 }

@@ -1,9 +1,12 @@
 import React from 'react';
 import { Typography } from 'antd';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import style from './SignUp.module.scss';
+import { registration } from '../../store/slices/authenticationSlice';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { setToken } from '../../utils/localStorage';
 
 const { Title } = Typography;
 
@@ -15,6 +18,9 @@ type FormInputs = {
 };
 
 const SignUp: React.FC = () => {
+  const { user } = useAppSelector((state) => state.authSlice);
+  const dispatch = useAppDispatch();
+  const navigate: any = useNavigate();
   const {
     register,
     reset,
@@ -23,22 +29,27 @@ const SignUp: React.FC = () => {
     formState: { errors },
   } = useForm<FormInputs>({ mode: 'onBlur' });
 
-  const onSubmit = (data: object): any => {
-    alert(JSON.stringify(data));
+  const onSubmit = (data: FormInputs) => {
+    dispatch(registration(data)).then((res: any) => setToken(res.payload.token));
     reset();
   };
 
+  if (user !== null) return navigate('/articles');
+
   return (
     <div className={style.register}>
-      <Title style={{ textAlign: 'center', marginBottom: '21px' }} level={3}>
-        Create new account
-      </Title>
+      <Link to="/">
+        <Title style={{ textAlign: 'center', marginBottom: '21px' }} level={3}>
+          Create new account
+        </Title>
+      </Link>
       <form className={style.form} onSubmit={handleSubmit(onSubmit)}>
         <label className={style.form__label} htmlFor="username">
           <span className={style.form__label_title}>Username</span>
           <input
             className={style.form__input}
             id="username"
+            type="text"
             {...register('username', {
               required: 'Please input your username!',
               minLength: {
@@ -99,6 +110,7 @@ const SignUp: React.FC = () => {
                 if (watch('password') !== value) {
                   return 'The passwords do not match';
                 }
+                return true;
               },
               required: 'Please input your repeatPassword!',
               minLength: {

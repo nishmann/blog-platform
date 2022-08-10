@@ -1,29 +1,26 @@
 import React from 'react';
 import { Typography } from 'antd';
-import { Link } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import style from '../SignUp/SignUp.module.scss';
+import { useAppDispatch } from '../../hooks';
+import { updateProfile } from '../../store/slices/authenticationSlice';
+import { UserUpdate } from '../../store/types';
+import { setToken } from '../../utils/localStorage';
 
 const { Title } = Typography;
 
-type FormInputs = {
-  username: string;
-  email: string;
-  password: string;
-  avatarImg: string;
-};
-
 const Profile: React.FC = () => {
+  const dispatch = useAppDispatch();
   const {
     register,
     reset,
     handleSubmit,
     formState: { errors },
-  } = useForm<FormInputs>({ mode: 'onBlur' });
+  } = useForm<UserUpdate>({ mode: 'onBlur' });
 
-  const onSubmit = (data: object): any => {
-    alert(JSON.stringify(data));
+  const onSubmit = (data: UserUpdate) => {
+    dispatch(updateProfile(data)).then((user: any) => setToken(user.payload.token));
     reset();
   };
 
@@ -85,12 +82,12 @@ const Profile: React.FC = () => {
             className={style.form__input}
             id="avatar"
             type="url"
-            {...register('avatarImg', {
+            {...register('image', {
               required: 'Please input your avatar image!',
             })}
             placeholder="Avatar image"
           />
-          <div className={style.form__error_text}>{errors.avatarImg && <p>{errors.avatarImg.message}</p>}</div>
+          <div className={style.form__error_text}>{errors.image && <p>{errors.image.message}</p>}</div>
         </label>
         <label className={style.form__submit} htmlFor="submit">
           <input className={style.form__submit_input} id="submit" type="submit" value="Save" />

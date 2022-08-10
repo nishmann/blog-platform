@@ -21,6 +21,7 @@
   "plugins": ["react", "@typescript-eslint", "react-hooks"],
   "parser": "@typescript-eslint/parser",
   "rules": {
+    "@typescript-eslint/explicit-function-return-type": "off",
     "no-param-reassign": 0,
     "import/prefer-default-export": "off",
     "default-param-last": "off",
@@ -39,12 +40,6 @@
       {
         "ts": "never",
         "tsx": "never"
-      }
-    ],
-    "@typescript-eslint/explicit-function-return-type": [
-      "error",
-      {
-        "allowExpressions": true
       }
     ]
   },
