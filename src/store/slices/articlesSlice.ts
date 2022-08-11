@@ -21,6 +21,15 @@ export const getArticle = createAsyncThunk('articles/getArticle', async (id: str
   return data.article;
 });
 
+export const deleteArticle = createAsyncThunk('articles/deleteArticle', async (slug: string) => {
+  await axios.delete(`https://blog.kata.academy/api/articles/${slug}`, {
+    headers: {
+      Authorization: token,
+      'Content-type': 'application/json; charset=UTF-8',
+    },
+  });
+});
+
 export const createArticle = createAsyncThunk('articles/create', async (data: Article): Promise<ArticleType> => {
   const { title, description, body, tagList } = data;
   const res = await axios.post(
