@@ -30,6 +30,28 @@ export const deleteArticle = createAsyncThunk('articles/deleteArticle', async (s
   });
 });
 
+export const likeArticle = createAsyncThunk('articles/like', async (slug: string) => {
+  const res = await axios.post(
+    `https://blog.kata.academy/api/articles/${slug}/favorite`,
+    {},
+    {
+      headers: {
+        Authorization: token,
+      },
+    }
+  );
+  return res.data;
+});
+
+export const disLikeArticle = createAsyncThunk('articles/like', async (slug: string) => {
+  const res = await axios.delete(`https://blog.kata.academy/api/articles/${slug}/favorite`, {
+    headers: {
+      Authorization: token,
+    },
+  });
+  return res.data;
+});
+
 export const createArticle = createAsyncThunk('articles/create', async (data: Article): Promise<ArticleType> => {
   const { title, description, body, tagList } = data;
   const res = await axios.post(

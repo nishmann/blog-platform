@@ -7,10 +7,20 @@ import { format } from 'date-fns';
 import style from './Article.module.scss';
 import { ArticleType } from '../../store/types';
 import { shortText } from '../../utils/shortText';
+import FavoriteArticle from '../FavoriteArticle';
 
 const { Text } = Typography;
 
-const Article: React.FC<ArticleType> = ({ title, favoritesCount, slug, tagList, author, description, updatedAt }) => {
+const Article: React.FC<ArticleType> = ({
+  title,
+  favoritesCount,
+  favorited,
+  slug,
+  tagList,
+  author,
+  description,
+  updatedAt,
+}) => {
   return (
     <div className={style.card}>
       <div className={style.card__content}>
@@ -18,9 +28,7 @@ const Article: React.FC<ArticleType> = ({ title, favoritesCount, slug, tagList, 
           <Link to={`/articles/${slug}`}>
             <h1 className={style.card__title}>{title}</h1>
           </Link>
-          <button className={style.card__btn} type="button">
-            <HeartOutlined /> {favoritesCount}
-          </button>
+          <FavoriteArticle slug={slug} favoritesCount={favoritesCount} favorited={favorited} />
         </div>
         <Tag>{tagList}</Tag>
         <p>{shortText(description, 150)}</p>
