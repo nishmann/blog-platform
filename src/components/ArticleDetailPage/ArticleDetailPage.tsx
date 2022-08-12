@@ -36,9 +36,8 @@ const ArticleDetailPage: React.FC = () => {
 
     const showDeleteConfirm = () => {
       confirm({
-        title: 'Are you sure delete this task?',
+        title: 'Are you sure delete this article?',
         icon: <ExclamationCircleOutlined />,
-        content: 'Some descriptions',
         okText: 'Yes',
         okType: 'danger',
         cancelText: 'No',
@@ -70,7 +69,9 @@ const ArticleDetailPage: React.FC = () => {
                 <Button onClick={showDeleteConfirm} danger>
                   Delete
                 </Button>
-                <Button style={{ borderColor: '#52C41A', color: '#52C41A' }}>Edit</Button>
+                <Link to={`/articles/${slug}/edit`}>
+                  <Button style={{ borderColor: '#52C41A', color: '#52C41A' }}>Edit</Button>
+                </Link>
               </div>
             </div>
           </div>

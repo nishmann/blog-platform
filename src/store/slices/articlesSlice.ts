@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { Article, ArticlesState, ArticleType } from '../types';
+import { Article, ArticlesState, ArticleType, ArticleUpdate } from '../types';
 import { getToken } from '../../utils/localStorage';
 
 const token = `Token ${getToken()}`;
@@ -34,6 +34,28 @@ export const createArticle = createAsyncThunk('articles/create', async (data: Ar
   const { title, description, body, tagList } = data;
   const res = await axios.post(
     'https://blog.kata.academy/api/articles',
+    {
+      article: {
+        title,
+        description,
+        body,
+        tagList,
+      },
+    },
+    {
+      headers: {
+        Authorization: token,
+        'Content-type': 'application/json; charset=UTF-8',
+      },
+    }
+  );
+  return res.data;
+});
+
+export const editArticle = createAsyncThunk('articles/edit', async (data: ArticleUpdate): Promise<ArticleType> => {
+  const { title, description, body, tagList, id } = data;
+  const res = await axios.put(
+    `https://blog.kata.academy/api/articles/${id}`,
     {
       article: {
         title,

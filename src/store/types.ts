@@ -63,6 +63,18 @@ export type Article = {
   tagList: string[];
 };
 
+export type ArticleUpdate = {
+  id?: string;
+  title?: string;
+  description?: string;
+  body?: string;
+  tagList?: string[];
+  createdAt?: string;
+  updatedAt?: string;
+  favorited?: boolean;
+  author?: Author;
+};
+
 export type ArticleResponse = {
   slug: string;
   title: string;
