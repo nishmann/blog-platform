@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
 
 import { createArticle } from '../../store/slices/articlesSlice';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import FormArticle from '../FormArticle';
 
 type NewArticleType = {
@@ -15,6 +15,7 @@ type NewArticleType = {
 };
 
 const NewArticle: React.FC = () => {
+  const { user } = useAppSelector((state) => state.authSlice);
   const navigate: any = useNavigate();
   const [newArticle, setNewArticle] = useState<any>();
   const dispatch = useAppDispatch();
@@ -29,6 +30,7 @@ const NewArticle: React.FC = () => {
     });
   };
 
+  if (user == null) return <Navigate to="/sign-in" />;
   if (newArticle) return navigate(`/articles/${newArticle}`);
 
   return (

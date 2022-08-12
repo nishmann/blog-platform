@@ -46,6 +46,11 @@ const Header: React.FC = () => {
     }
     return (
       <div>
+        <Link to="/new-article">
+          <Button style={{ borderColor: '#52C41A', color: '#52C41A' }} type="primary" ghost>
+            Create article
+          </Button>
+        </Link>
         <Link to="sign-in">
           <Button type="link">Sign In</Button>
         </Link>

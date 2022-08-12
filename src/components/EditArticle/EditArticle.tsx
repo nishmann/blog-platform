@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { editArticle, getArticle } from '../../store/slices/articlesSlice';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import FormArticle from '../FormArticle';
 
 type NewArticleType = {
@@ -14,6 +14,7 @@ type NewArticleType = {
 };
 
 const EditArticle: React.FC = () => {
+  const { user } = useAppSelector((state) => state.authSlice);
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const [article, setArticle] = useState<any>();
@@ -36,6 +37,7 @@ const EditArticle: React.FC = () => {
     });
   };
 
+  if (user == null) return <Navigate to="/sign-in" />;
   if (updatedArticle) return navigate(`/articles/${updatedArticle}`);
 
   return (
