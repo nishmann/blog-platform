@@ -1,22 +1,24 @@
 import React, { useEffect, useState } from 'react';
-import { Avatar, Button, Tag, Typography, Modal } from 'antd';
+import { Button, Tag, Typography, Modal } from 'antd';
 import ReactMarkdown from 'react-markdown';
-import { ExclamationCircleOutlined, UserOutlined } from '@ant-design/icons';
+import { ExclamationCircleOutlined } from '@ant-design/icons';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 
 import styleAvatar from '../Article/Article.module.scss';
 import style from './ArticleDetailPage.module.scss';
 import { deleteArticle, getArticle } from '../../store/slices/articlesSlice';
-import { useAppDispatch } from '../../hooks';
+import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ArticleType } from '../../store/types';
 import { shortText } from '../../utils/shortText';
 import FavoriteArticle from '../FavoriteArticle';
+import avatar from '../../assets/img/profile-icon-male-avatar-portrait-casual-person-silhouette-face-flat-design-vector-46846330.jpg';
 
 const { Title, Text } = Typography;
 const { confirm } = Modal;
 
 const ArticleDetailPage: React.FC = () => {
+  const { user } = useAppSelector((state) => state.authSlice);
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [article, setArticle] = useState();
@@ -79,7 +81,7 @@ const ArticleDetailPage: React.FC = () => {
               <p>{author.username}</p>
               <Text type="secondary">{format(new Date(updatedAt), 'MMMM d, u')}</Text>
             </div>
-            <Avatar icon={<UserOutlined />} />
+            <img className={styleAvatar.avatar__logo} src={`${author.image}`} alt={`Avatar ${author.username}`} />
           </div>
         </div>
         <Title level={3}>{title}</Title>

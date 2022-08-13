@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 
 import style from './App.module.scss';
 import 'antd/dist/antd.css';
@@ -10,13 +10,14 @@ import Header from './components/Header';
 import SignUp from './components/SignUp';
 import SignIn from './components/SignIn';
 import Profile from './components/Profile';
-import { useAppDispatch } from './hooks';
+import { useAppDispatch, useAppSelector } from './hooks';
 import { getUser } from './store/slices/authenticationSlice';
 import NewArticle from './components/NewArticle';
 import EditArticle from './components/EditArticle';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
+  const { user } = useAppSelector((state) => state.authSlice);
 
   useEffect(() => {
     dispatch(getUser());
@@ -24,6 +25,7 @@ const App: React.FC = () => {
 
   return (
     <BrowserRouter>
+      {user == null && <Navigate to="/sign-in" />}
       <div className={style.app}>
         <Header />
         <div className={style.app__content}>

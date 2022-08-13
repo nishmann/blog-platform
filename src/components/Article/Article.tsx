@@ -1,6 +1,5 @@
 import React from 'react';
-import { Avatar, Tag, Typography } from 'antd';
-import { HeartOutlined, UserOutlined } from '@ant-design/icons';
+import { Tag, Typography } from 'antd';
 import { Link } from 'react-router-dom';
 import { format } from 'date-fns';
 
@@ -38,7 +37,7 @@ const Article: React.FC<ArticleType> = ({
           <p>{author.username}</p>
           <Text type="secondary">{format(new Date(updatedAt), 'MMMM d, u')}</Text>
         </div>
-        <Avatar icon={<UserOutlined />} />
+        <img className={style.avatar__logo} src={`${author.image}`} alt={`Avatar ${author.username}`} />
       </div>
     </div>
   );
