@@ -3,6 +3,8 @@ import { Navigate, useNavigate, useParams } from 'react-router-dom';
 import { editArticle, getArticle } from '../../store/slices/articlesSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import FormArticle from '../FormArticle';
+import SpinErr from '../Error/SpinErr';
+import Warning from '../Error/Warning';
 
 type NewArticleType = {
   title: string;
@@ -14,7 +16,7 @@ type NewArticleType = {
 };
 
 const EditArticle: React.FC = () => {
-  const { user } = useAppSelector((state) => state.authSlice);
+  const { user, error, loading } = useAppSelector((state) => state.authSlice);
   const dispatch = useAppDispatch();
   const { id } = useParams();
   const [article, setArticle] = useState<any>();
@@ -23,18 +25,25 @@ const EditArticle: React.FC = () => {
 
   useEffect(() => {
     if (id != null) {
-      dispatch(getArticle(id)).then((el) => setArticle(el.payload));
+      dispatch(getArticle(id))
+        .then((el) => setArticle(el.payload))
+        .catch(() => <Warning />);
     }
   }, []);
+
+  if (loading) return <SpinErr />;
+  if (error) return <Warning />;
 
   const onSubmit = (data: NewArticleType) => {
     const { cart, title, description, body } = data;
     const tagList = Object.values(cart).map((el) => el.name);
     const newData = { title, description, body, tagList, id };
-    dispatch(editArticle(newData)).then((result: any) => {
-      const { slug } = result.payload.article;
-      setUpdatedArticle(slug);
-    });
+    dispatch(editArticle(newData))
+      .then((result: any) => {
+        const { slug } = result.payload.article;
+        setUpdatedArticle(slug);
+      })
+      .catch((e) => console.log(e));
   };
 
   if (user == null) return <Navigate to="/sign-in" />;

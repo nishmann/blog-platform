@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from 'antd';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, Navigate, useNavigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import style from '../SignUp/SignUp.module.scss';
@@ -31,7 +31,7 @@ const SignIn: React.FC = () => {
     reset();
   };
 
-  if (user !== null) return navigate('/articles');
+  // if (user !== null) return <Navigate to="/articles" />;
 
   return (
     <div className={style.register}>
