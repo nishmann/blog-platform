@@ -5,6 +5,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks';
 import FormArticle from '../FormArticle';
 import SpinErr from '../Error/SpinErr';
 import Warning from '../Error/Warning';
+import ErrorInternet from '../Error/ErrorInternet';
 
 type NewArticleType = {
   title: string;
@@ -27,12 +28,12 @@ const EditArticle: React.FC = () => {
     if (id != null) {
       dispatch(getArticle(id))
         .then((el) => setArticle(el.payload))
-        .catch(() => <Warning />);
+        .catch((e) => <Warning text={e.message} />);
     }
   }, []);
 
   if (loading) return <SpinErr />;
-  if (error) return <Warning />;
+  if (error) return <Warning text={error} />;
 
   const onSubmit = (data: NewArticleType) => {
     const { cart, title, description, body } = data;
@@ -43,7 +44,7 @@ const EditArticle: React.FC = () => {
         const { slug } = result.payload.article;
         setUpdatedArticle(slug);
       })
-      .catch((e) => console.log(e));
+      .catch(() => <ErrorInternet />);
   };
 
   if (user == null) return <Navigate to="/sign-in" />;

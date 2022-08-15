@@ -16,22 +16,21 @@ import NewArticle from './components/NewArticle';
 import EditArticle from './components/EditArticle';
 import SpinErr from './components/Error/SpinErr';
 import Warning from './components/Error/Warning';
-import { getToken } from './utils/localStorage';
 
 const App: React.FC = () => {
   const dispatch = useAppDispatch();
   const { user, loading, error } = useAppSelector((state) => state.authSlice);
-  const token = getToken();
 
   useEffect(() => {
     dispatch(getUser());
   }, []);
 
-  // if (loading) return <SpinErr />;
-  // if (error) return <Warning />;
+  if (loading) return <SpinErr />;
+  if (error) return <Warning text={error} />;
 
   return (
     <BrowserRouter>
+      {user == null && <Navigate to="/sign-in" />}
       <div className={style.app}>
         <Header />
         <div className={style.app__content}>

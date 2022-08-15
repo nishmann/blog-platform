@@ -30,11 +30,11 @@ const ErrorInternet: React.FC = () => {
         </Paragraph>
         <Paragraph>
           <CloseCircleOutlined className="site-result-demo-error-icon" /> Your account has been frozen.{' '}
-          <a>Thaw immediately &gt;</a>
+          <p>Thaw immediately &gt;</p>
         </Paragraph>
         <Paragraph>
           <CloseCircleOutlined className="site-result-demo-error-icon" /> Your account is not yet eligible to apply.{' '}
-          <a>Apply Unlock &gt;</a>
+          <p>Apply Unlock &gt;</p>
         </Paragraph>
       </div>
     </Result>

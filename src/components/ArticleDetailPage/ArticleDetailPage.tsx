@@ -2,17 +2,18 @@ import React, { useEffect, useState } from 'react';
 import { Button, Tag, Typography, Modal } from 'antd';
 import ReactMarkdown from 'react-markdown';
 import { ExclamationCircleOutlined } from '@ant-design/icons';
-import { Link, useNavigate, useParams } from 'react-router-dom';
+import { Link, Navigate, useNavigate, useParams } from 'react-router-dom';
 import { format } from 'date-fns';
 
 import styleAvatar from '../Article/Article.module.scss';
 import style from './ArticleDetailPage.module.scss';
+
 import { deleteArticle, getArticle } from '../../store/slices/articlesSlice';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { ArticleType } from '../../store/types';
 import { shortText } from '../../utils/shortText';
 import FavoriteArticle from '../FavoriteArticle';
-import avatar from '../../assets/img/profile-icon-male-avatar-portrait-casual-person-silhouette-face-flat-design-vector-46846330.jpg';
+import Warning from '../Error/Warning';
 
 const { Title, Text } = Typography;
 const { confirm } = Modal;
@@ -26,7 +27,9 @@ const ArticleDetailPage: React.FC = () => {
 
   useEffect(() => {
     if (id != null) {
-      dispatch(getArticle(id)).then((el) => setArticle(el.payload));
+      dispatch(getArticle(id))
+        .then((el) => setArticle(el.payload))
+        .catch((e) => <Warning text={e} />);
     }
   }, []);
 
@@ -52,6 +55,8 @@ const ArticleDetailPage: React.FC = () => {
         },
       });
     };
+
+    if (user == null) return <Navigate to="/sign-in" />;
 
     return (
       <div className={style.article__page}>

@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from 'antd';
-import { Link, Navigate, useNavigate } from 'react-router-dom';
+import { Link, Navigate } from 'react-router-dom';
 import { useForm } from 'react-hook-form';
 
 import style from '../SignUp/SignUp.module.scss';
@@ -18,7 +18,6 @@ type FormInputs = {
 const SignIn: React.FC = () => {
   const { user } = useAppSelector((state) => state.authSlice);
   const dispatch = useAppDispatch();
-  const navigate: any = useNavigate();
   const {
     register,
     reset,
@@ -31,7 +30,7 @@ const SignIn: React.FC = () => {
     reset();
   };
 
-  // if (user !== null) return <Navigate to="/articles" />;
+  if (user !== null) return <Navigate to="/articles" />;
 
   return (
     <div className={style.register}>
